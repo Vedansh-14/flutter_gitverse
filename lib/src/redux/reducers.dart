@@ -1,5 +1,8 @@
 import 'package:flutter_gitverse/src/redux/github_actions.dart';
 import 'package:flutter_gitverse/src/model/app_state.dart';
+
+import 'package:fluttertoast/fluttertoast.dart';
+
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -11,6 +14,7 @@ Future<Map<String, dynamic>> fetchUserDetails(String username) async {
     return json.decode(response.body);
   } else {
     throw Exception('Failed to load user details');
+    
   }
 }
 

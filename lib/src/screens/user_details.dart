@@ -5,7 +5,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import '../model/app_state.dart';
 import '../redux/github_actions.dart';
-
+import 'package:url_launcher/url_launcher.dart';
+import '../widgets/cards.dart';
 class UserDetailsScreen extends StatelessWidget {
   final String username;
 
@@ -26,13 +27,21 @@ class UserDetailsScreen extends StatelessWidget {
         };
       },
       builder: (BuildContext context, dynamic state) {
+        
         final userDetails = state['userDetails'];
+        if (userDetails == null) {
+          // You can return a loading indicator or an error message here
+          return const CircularProgressIndicator(color: Colors.blue,); // For example, show a loading indicator
+        }
         final repositories = state['repositories'];
         final username = userDetails['name'] ?? userDetails['login'];
         String followers = userDetails['followers'].toString();
         String following = userDetails['following'].toString();
         return Scaffold(
-          appBar: AppBar(title: const Text('GitVerse'),centerTitle: true,),
+          appBar: AppBar(
+            title: const Text('GitVerse'),
+            centerTitle: true,
+          ),
           backgroundColor: Colors.black,
           body: ListView(
             children: [
@@ -59,35 +68,35 @@ class UserDetailsScreen extends StatelessWidget {
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
-                                     Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.person,
-                        color: Colors.white,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.person,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(width: 20),
+                          Text(
+                            'Followers: $followers',
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          const SizedBox(width: 20),
+                          Text(
+                            'Following: $following',
+                            style: const TextStyle(color: Colors.white),
+                          )
+                        ],
                       ),
-                      const SizedBox(width: 20),
-                      Text(
-                        'Followers: $followers',
-                        style: const TextStyle(color: Colors.white),
+                    ),
+                    const SizedBox(height: 20),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 20),
+                      child: Text(
+                        'Repositories',
+                        style: TextStyle(color: Colors.white, fontSize: 25),
                       ),
-                      const SizedBox(width: 20),
-                      Text(
-                        'Following: $following',
-                        style: const TextStyle(color: Colors.white),
-                      )
-                    ],
-                  ),
-                ),
-                 const SizedBox(height: 20),
-                 const Padding(
-                  padding: EdgeInsets.only(left: 20),
-                  child: Text(
-                    'Repositories',
-                    style: TextStyle(color: Colors.white, fontSize: 25),
-                  ),
-                ),
+                    ),
                     // ... rest of the code ...
                   ],
                 ),
@@ -104,7 +113,7 @@ class UserDetailsScreen extends StatelessWidget {
                     return RepositoryCard(
                       name: repository['name'],
                       created_at: repository['created_at'],
-                      cloneUrl: repository['clone_url'],
+                      cloneUrl: repository['svn_url'],
                     );
                   },
                 ),
@@ -117,49 +126,3 @@ class UserDetailsScreen extends StatelessWidget {
   }
 }
 
-class RepositoryCard extends StatelessWidget {
-  final String name;
-  final String created_at;
-  final String cloneUrl;
-
-  RepositoryCard({
-    required this.name,
-    required this.created_at,
-    required this.cloneUrl,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      margin: const EdgeInsets.all(10),
-      child: ListTile(
-        contentPadding: const EdgeInsets.all(10),
-        leading: const Icon(Icons.code, color: Colors.blue),
-        title: Text(
-          'Name: $name',
-          style: const TextStyle(fontSize: 16),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Created on: $created_at',
-              style: const TextStyle(fontSize: 14),
-            ),
-            Text(
-              'Clone Repository: $cloneUrl',
-              style: const TextStyle(fontSize: 14),
-            ),
-          ],
-        ),
-        trailing: IconButton(
-          icon: const Icon(Icons.star_border),
-          onPressed: () {
-            // Implement your star/favorite action here
-          },
-        ),
-      ),
-    );
-  }
-}

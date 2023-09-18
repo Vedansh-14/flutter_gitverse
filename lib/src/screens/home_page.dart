@@ -6,7 +6,7 @@ import 'package:flutter_gitverse/src/screens/user_details.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import '../model/app_state.dart';
 import '../redux/github_actions.dart';
-
+import '../widgets/cards.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -139,47 +139,3 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class UserCard extends StatelessWidget {
-  final String name;
-  final int followers;
-  final String url;
-  final String location;
-
-  const UserCard({
-    required this.name,
-    required this.followers,
-    required this.url,
-    required this.location,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      margin: const EdgeInsets.all(10),
-      child: ListTile(
-        contentPadding: const EdgeInsets.all(10),
-        leading: CircleAvatar(
-          backgroundImage: NetworkImage(url),
-        ),
-        title: Text(
-          'Name: $name',
-          style: const TextStyle(fontSize: 16),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Followers: $followers',
-              style: const TextStyle(fontSize: 14),
-            ),
-            Text(
-              'Location: $location',
-              style: const TextStyle(fontSize: 14),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
