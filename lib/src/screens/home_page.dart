@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
         );
       } catch (e) {
         print(e);
-        // Handle errors here, e.g., show an error dialog.
+
       }
     }
 

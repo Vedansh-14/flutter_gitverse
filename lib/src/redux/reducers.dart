@@ -13,7 +13,7 @@ Future<Map<String, dynamic>> fetchUserDetails(
   final response = await http.get(
     Uri.parse('https://api.github.com/users/$username'),
     headers: <String, String>{
-      'Authorization': 'Bearer $authToken', // Replace with your actual token
+      'Authorization': 'Bearer $authToken', 
     },
   );
 
@@ -29,7 +29,7 @@ Future<List<Map<String, dynamic>>> fetchUserRepositories(
   final response = await http.get(
     Uri.parse('https://api.github.com/users/$username/repos'),
     headers: <String, String>{
-      'Authorization': 'Bearer $authToken', // Replace with your actual token
+      'Authorization': 'Bearer $authToken', 
     },
   );
 
@@ -58,18 +58,17 @@ AppState appReducer(AppState state, dynamic action) {
     final updatedSearches =
         List<Map<String, dynamic>>.from(state.recentSearches);
     final userDetails =
-        action.searches.first; // Assuming action.searches contains userDetails
+        action.searches.first; 
     final existingIndex = updatedSearches.indexWhere((searchResult) =>
         searchResult['login'] ==
         userDetails[
-            'login']); // Assuming 'login' is a unique identifier for users
+            'login']); 
 
     if (existingIndex != -1) {
-      // If userDetails already exists, remove the previous occurrence
       updatedSearches.removeAt(existingIndex);
     }
 
-    updatedSearches.add(userDetails); // Add the new userDetails
+    updatedSearches.add(userDetails); 
     return AppState.fromAppState(state)..recentSearches = updatedSearches;
   }
 

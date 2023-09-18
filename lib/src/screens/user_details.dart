@@ -30,8 +30,7 @@ class UserDetailsScreen extends StatelessWidget {
         
         final userDetails = state['userDetails'];
         if (userDetails == null) {
-          // You can return a loading indicator or an error message here
-          return const CircularProgressIndicator(color: Colors.blue,); // For example, show a loading indicator
+          return const CircularProgressIndicator(color: Colors.blue,); 
         }
         final repositories = state['repositories'];
         final username = userDetails['name'] ?? userDetails['login'];
@@ -97,7 +96,6 @@ class UserDetailsScreen extends StatelessWidget {
                         style: TextStyle(color: Colors.white, fontSize: 25),
                       ),
                     ),
-                    // ... rest of the code ...
                   ],
                 ),
               ),
