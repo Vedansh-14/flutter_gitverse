@@ -122,10 +122,10 @@ class HomeScreen extends StatelessWidget {
                           );
                         },
                         child: UserCard(
-                            name: searchResult['name'] ?? store.state.userName,
+                            name: searchResult['name'] ?? searchResult['login'],
                             followers: searchResult['followers'],
                             url: searchResult['avatar_url'],
-                            location: searchResult['location'] ?? 'unknown'),
+                            location: searchResult['location'] ?? 'Unknown'),
                       );
                     },
                   );

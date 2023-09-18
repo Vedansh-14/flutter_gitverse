@@ -90,10 +90,10 @@ class UserDetailsScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(left: 20),
                       child: Text(
-                        'Repositories',
+                         'Repositories: ${repositories.length ?? 0}',
                         style: TextStyle(color: Colors.white, fontSize: 25),
                       ),
                     ),
